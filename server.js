@@ -189,7 +189,7 @@ app.put('/api/gifts/:id/contribute', async (req, res) => {
 
 // ✏️ Изменить подарок (админ): цена, цель складчины, заметка
 app.patch('/api/gifts/:id', async (req, res) => {
-  const { admin_key, price, target_amount, admin_note, is_group_gift } = req.body;
+  const { admin_key, price, target_amount, admin_note, is_group_gift, link } = req.body;
   if (admin_key !== process.env.ADMIN_KEY) {
     return res.status(403).json({ error: 'Неверный ключ администратора' });
   }
@@ -221,10 +221,21 @@ app.patch('/api/gifts/:id', async (req, res) => {
     fields.push(`admin_note = $${n++}`);
     values.push(admin_note === '' || admin_note === null ? null : String(admin_note));
   }
+  if (link !== undefined) {
+    const s = link === null || link === '' ? '' : String(link).trim();
+    if (!s || !/^https?:\/\/.+/i.test(s)) {
+      return res.status(400).json({
+        error: 'Укажите корректную ссылку на товар (http:// или https://)',
+      });
+    }
+    fields.push(`link = $${n++}`);
+    values.push(s);
+  }
 
   if (fields.length === 0) {
     return res.status(400).json({
-      error: 'Укажите цену, цель, заметку, тип подарка (складчина) или другие поля',
+      error:
+        'Укажите цену, ссылку, цель, заметку, тип подарка (складчина) или другие поля',
     });
   }
 

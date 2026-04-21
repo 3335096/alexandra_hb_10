@@ -63,6 +63,9 @@ function renderGiftCard(gift, showAdminDetail) {
           Подарок в складчину
         </span>
       </label>
+      <label class="admin-field">Ссылка на товар
+        <input type="url" data-field="link" value="${gift.link ? escapeHtml(gift.link) : ''}" placeholder="https://..." autocomplete="off" />
+      </label>
       ${
         isGroup
           ? `<div class="admin-contrib-wrap">
@@ -148,11 +151,13 @@ async function saveGiftAdmin(id) {
 
   const body = { admin_key: getAdminKey() };
   const grp = card.querySelector('[data-field="group"]');
+  const linkInp = card.querySelector('[data-field="link"]');
   const p = card.querySelector('[data-field="price"]');
   const t = card.querySelector('[data-field="target"]');
   const n = card.querySelector('[data-field="note"]');
 
   if (grp) body.is_group_gift = grp.checked;
+  if (linkInp) body.link = linkInp.value.trim();
   if (p) body.price = p.value === '' ? null : Number(p.value);
   if (t) body.target_amount = t.value === '' ? null : Number(t.value);
   if (n) body.admin_note = n.value.trim() === '' ? null : n.value;
