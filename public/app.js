@@ -201,9 +201,17 @@ document.getElementById('gifts-container').addEventListener('click', (e) => {
     return;
   }
   const r = e.target.closest('.btn-open-reserve');
-  if (r) openReserveModal(Number(r.dataset.gid));
+  if (r) {
+    if (typeof burstConfetti === 'function') burstConfetti(e.clientX, e.clientY);
+    openReserveModal(Number(r.dataset.gid));
+    return;
+  }
   const g = e.target.closest('.btn-open-group');
-  if (g) openGroupModal(Number(g.dataset.gid));
+  if (g) {
+    if (typeof burstConfetti === 'function') burstConfetti(e.clientX, e.clientY);
+    openGroupModal(Number(g.dataset.gid));
+    return;
+  }
 });
 
 document.getElementById('reserve-form').onsubmit = async (e) => {

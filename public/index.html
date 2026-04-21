@@ -68,7 +68,7 @@
     <progress id="group-progress" max="100" value="0"></progress>
     <form id="group-form">
       <label>Ваше имя: <input type="text" id="group-name" required minlength="2" /></label>
-      <label>Сумма (₽): <input type="number" id="group-amount" min="100" step="100" required /></label>
+      <label>Сумма (₽): <input type="number" id="group-amount" min="50" step="1" required /></label>
       <div class="modal-actions">
         <button type="submit" class="btn btn-primary">Внести вклад</button>
         <button type="button" id="close-group" class="btn btn-ghost">Отмена</button>
@@ -99,6 +99,7 @@
       <a href="tel:+375296699001" class="mom-phone">+375296699001</a>
     </p>
   </footer>
+  <script src="confetti.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
