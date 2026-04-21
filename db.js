@@ -25,6 +25,13 @@ module.exports = {
         await pool.query(`${stmt};`);
       }
       console.log('✅ Wishlist seed applied');
+
+      await pool.query(`
+        DELETE FROM gifts
+        WHERE link IN ('https://example.com/wishlist-test-reserve', 'https://example.com/wishlist-test-group')
+           OR title LIKE '[[]Тест]%'
+      `);
+      console.log('✅ Test gifts removed if present');
     }
 
     console.log('✅ Database initialized');

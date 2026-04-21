@@ -1,6 +1,11 @@
 -- Подарки ozon.by. Повторный запуск безопасен: INSERT не дублирует по link.
 -- Сначала правим уже сохранённые опечатки в slug, затем добавляем недостающие строки.
 
+DELETE FROM gifts WHERE link IN (
+  'https://example.com/wishlist-test-reserve',
+  'https://example.com/wishlist-test-group'
+);
+
 UPDATE gifts SET link = 'https://ozon.by/t/4kIs8RZ' WHERE link = 'https://ozon.by/t/4kls8RZ';
 UPDATE gifts SET link = 'https://ozon.by/t/NBDlzyW' WHERE link = 'https://ozon.by/t/NBDIzyW';
 UPDATE gifts SET link = 'https://ozon.by/t/nPIHvAe' WHERE link = 'https://ozon.by/t/nPlHvAe';
@@ -55,16 +60,3 @@ WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/b2rc3W2');
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
 SELECT $$Набор для творчества и создания брелков и заколок$$, NULL, 'https://ozon.by/t/uevTvzI', NULL, NULL, false, NULL
 WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/uevTvzI');
-
--- Тестовые карточки (проверка брони и складчины). Можно удалить из БД и убрать отсюда после проверки.
-INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
-SELECT
-  $$[Тест] Подарок — бронь$$,
-  $$Проверка кнопки «Забронировать». Ссылка ведёт на example.com — настоящий товар не заказывайте.$$, 'https://example.com/wishlist-test-reserve', NULL, 1, false, NULL
-WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://example.com/wishlist-test-reserve');
-
-INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
-SELECT
-  $$[Тест] Подарок — складчина$$,
-  $$Проверка кнопки «В складчину» и сбора суммы. Тестовая цель 5 000 ₽.$$, 'https://example.com/wishlist-test-group', NULL, 100, true, 5000
-WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://example.com/wishlist-test-group');
