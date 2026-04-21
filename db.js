@@ -12,6 +12,7 @@ module.exports = {
   init: async () => {
     const schema = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf-8');
     await pool.query(schema);
+    await pool.query('ALTER TABLE gifts ADD COLUMN IF NOT EXISTS admin_note TEXT');
 
     const seedPath = path.join(__dirname, 'seed_gifts.sql');
     if (fs.existsSync(seedPath)) {

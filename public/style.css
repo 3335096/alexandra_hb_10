@@ -585,6 +585,102 @@ body {
   border-color: var(--pink-300);
 }
 
+.gift-admin {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 1rem 0.85rem;
+  border-radius: 16px;
+  text-align: left;
+  align-self: stretch;
+  background: linear-gradient(145deg, rgba(255, 240, 252, 0.95), rgba(233, 212, 255, 0.35));
+  border: 1px dashed var(--pink-400);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.gift-admin-heading {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pink-700);
+  margin-bottom: 0.65rem;
+  text-align: center;
+}
+
+.gift-admin-sub {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--pink-700);
+  margin-bottom: 0.35rem;
+}
+
+.admin-lead {
+  font-size: 0.88rem;
+  color: var(--text-soft);
+  margin-bottom: 0.65rem;
+  text-align: center;
+}
+
+.admin-contrib-wrap {
+  margin-bottom: 0.75rem;
+}
+
+.admin-contrib-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.admin-contrib-list li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(255, 182, 222, 0.45);
+}
+
+.admin-contrib-list li:last-child {
+  border-bottom: none;
+}
+
+.contrib-name {
+  color: var(--text-soft);
+}
+
+.admin-muted {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  font-style: italic;
+  margin: 0;
+}
+
+.admin-field {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--pink-700);
+  text-align: left;
+}
+
+.admin-field input,
+.admin-field textarea {
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.5rem 0.55rem;
+  border-radius: 10px;
+  border: 1px solid var(--pink-200);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.btn-admin-save {
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
 @media (max-width: 600px) {
   .hero-mascots { gap: 1rem; }
   .mascot { width: 4.5rem; height: 4.5rem; }

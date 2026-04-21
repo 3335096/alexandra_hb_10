@@ -6,6 +6,40 @@ const db = require('./db');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+function normalizeContributors(row) {
+  let c = row.contributors;
+  if (c == null) return [];
+  if (typeof c === 'string') {
+    try {
+      c = JSON.parse(c);
+    } catch {
+      return [];
+    }
+  }
+  return Array.isArray(c) ? c : [];
+}
+
+/** Без имён брони, списка вкладов и заметки админа — только для гостей */
+function sanitizeGiftRow(row) {
+  const contributors = normalizeContributors(row);
+  const contributorCount = contributors.length;
+  const {
+    reserved_by_name: _r,
+    reserved_at: _a,
+    admin_note: _n,
+    contributors: _c,
+    ...rest
+  } = row;
+  return {
+    ...rest,
+    contributors: [],
+    contributor_count: contributorCount,
+    reserved_by_name: null,
+    reserved_at: null,
+    admin_note: null
+  };
+}
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
@@ -14,11 +48,22 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-// 🎁 Получить все подарки
+// 🎁 Получить все подарки (полные данные только с заголовком X-Admin-Key)
 app.get('/api/gifts', async (req, res) => {
   try {
+    const adminHeader = req.headers['x-admin-key'];
+    const isAdmin =
+      adminHeader &&
+      process.env.ADMIN_KEY &&
+      adminHeader === process.env.ADMIN_KEY;
+
     const result = await db.query('SELECT * FROM gifts ORDER BY created_at DESC');
-    res.json(result.rows);
+    const rows = result.rows.map((row) => {
+      const normalized = { ...row, contributors: normalizeContributors(row) };
+      if (isAdmin) return normalized;
+      return sanitizeGiftRow(normalized);
+    });
+    res.json(rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Ошибка загрузки подарков' });
@@ -111,6 +156,53 @@ app.put('/api/gifts/:id/contribute', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Ошибка участия в складчине' });
+  }
+});
+
+// ✏️ Изменить подарок (админ): цена, цель складчины, заметка
+app.patch('/api/gifts/:id', async (req, res) => {
+  const { admin_key, price, target_amount, admin_note } = req.body;
+  if (admin_key !== process.env.ADMIN_KEY) {
+    return res.status(403).json({ error: 'Неверный ключ администратора' });
+  }
+
+  const fields = [];
+  const values = [];
+  let n = 1;
+
+  if (price !== undefined) {
+    fields.push(`price = $${n++}`);
+    values.push(price === '' || price === null ? null : Number(price));
+  }
+  if (target_amount !== undefined) {
+    fields.push(`target_amount = $${n++}`);
+    values.push(target_amount === '' || target_amount === null ? null : Number(target_amount));
+  }
+  if (admin_note !== undefined) {
+    fields.push(`admin_note = $${n++}`);
+    values.push(admin_note === '' || admin_note === null ? null : String(admin_note));
+  }
+
+  if (fields.length === 0) {
+    return res.status(400).json({ error: 'Укажите цену, цель складчины или заметку' });
+  }
+
+  values.push(req.params.id);
+
+  try {
+    const result = await db.query(
+      `UPDATE gifts SET ${fields.join(', ')} WHERE id = $${n} RETURNING *`,
+      values
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Подарок не найден' });
+    }
+    const row = result.rows[0];
+    row.contributors = normalizeContributors(row);
+    res.json(row);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Ошибка сохранения' });
   }
 });
 

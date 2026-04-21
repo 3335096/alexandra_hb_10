@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS gifts (
   reserved_by_name TEXT,
   reserved_at TIMESTAMPTZ,
   contributors JSONB DEFAULT '[]', -- [{name: "Имя", amount: 500}]
+  admin_note TEXT, -- заметка администратора (складчина / внутреннее), не показывается гостям
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
