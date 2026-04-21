@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">5=L @>645=8O !0H8  <>9 28H;8AB</title>
+  <desc id="desc">>40@>G=K9 A?8A>: A 548=>@>3><</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff5fb"/>
+      <stop offset="45%" stop-color="#fce7f6"/>
+      <stop offset="100%" stop-color="#e9d5ff"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="900" cy="140" r="180" fill="#fbcfe8" opacity="0.55"/>
+  <circle cx="250" cy="520" r="220" fill="#fcd34d" opacity="0.22"/>
+  <text x="600" y="200" text-anchor="middle" font-size="160" font-family="Segoe UI Emoji,Apple Color Emoji,Noto Color Emoji,sans-serif">>„</text>
+  <text x="600" y="360" text-anchor="middle" font-size="56" font-family="system-ui,-apple-system,sans-serif" fill="#be185d" font-weight="700">5=L @>645=8O !0H8</text>
+  <text x="600" y="445" text-anchor="middle" font-size="42" font-family="system-ui,-apple-system,sans-serif" fill="#db2777" font-weight="600"><>9 28H ;8AB</text>
+  <text x="600" y="535" text-anchor="middle" font-size="26" fill="#9d174d" opacity="0.85">01@>=8@C9 ?>40@>: 8;8 2ABC?09 2 A:;04G8=C (</text>
+</svg>

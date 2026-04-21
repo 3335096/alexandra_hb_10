@@ -1,7 +1,22 @@
 require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
+
+const INDEX_HTML_PATH = path.join(__dirname, 'public', 'index.html');
+let indexHtmlTemplate = null;
+
+function getPublicBaseUrl(req) {
+  const fromEnv = process.env.PUBLIC_URL || process.env.BASE_URL;
+  if (fromEnv) return String(fromEnv).replace(/\/$/, '');
+  const proto =
+    req.get('x-forwarded-proto') ||
+    (req.secure ? 'https' : 'http');
+  const host = req.get('host') || 'localhost';
+  return `${proto}://${host}`;
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -45,7 +60,17 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  try {
+    if (!indexHtmlTemplate) {
+      indexHtmlTemplate = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
+    }
+    const baseUrl = getPublicBaseUrl(req);
+    const html = indexHtmlTemplate.replace(/\{\{BASE_URL\}\}/g, baseUrl);
+    res.type('html').send(html);
+  } catch (err) {
+    console.error(err);
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  }
 });
 
 // 🎁 Получить все подарки (полные данные только с заголовком X-Admin-Key)
@@ -127,6 +152,9 @@ app.put('/api/gifts/:id/contribute', async (req, res) => {
   }
   if (!amount || amount <= 0) {
     return res.status(400).json({ error: 'Укажите корректную сумму' });
+  }
+  if (Number(amount) < 50) {
+    return res.status(400).json({ error: 'Минимальный взнос 50 ₽' });
   }
   
   try {
