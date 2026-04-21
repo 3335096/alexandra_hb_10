@@ -12,13 +12,9 @@
     <p>День рождения: <strong>10 лет!</strong> 🎈</p>
     <p class="subtitle">Выберите подарок и отметьте, что планируете подарить 💝</p>
   </header>
-
   <main id="gifts-container" class="gifts-grid">
-    <!-- Карточки подарков загружаются через JS -->
     <p class="loading">Загрузка списка подарков...</p>
   </main>
-
-  <!-- Модальное окно: бронирование -->
   <dialog id="reserve-modal">
     <h3>🔒 Забронировать подарок</h3>
     <p id="modal-gift-title"></p>
@@ -30,8 +26,6 @@
       </div>
     </form>
   </dialog>
-
-  <!-- Модальное окно: складчина -->
   <dialog id="group-modal">
     <h3>👥 Присоединиться к складчине</h3>
     <p id="group-gift-title"></p>
@@ -46,8 +40,6 @@
       </div>
     </form>
   </dialog>
-
-  <!-- Админ-панель (скрыта по умолчанию) -->
   <section id="admin-panel" hidden>
     <h2>⚙️ Админ-панель</h2>
     <form id="add-gift-form">
@@ -62,13 +54,10 @@
       <button type="submit">➕ Добавить подарок</button>
     </form>
   </section>
-
   <button id="toggle-admin" class="admin-toggle">🔐 Админ</button>
-
   <footer>
     <p>Сделано с 💜 для Александры | <a href="#" id="show-admin-link">Для родителей</a></p>
   </footer>
-
   <script src="app.js"></script>
 </body>
 </html>
