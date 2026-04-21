@@ -24,7 +24,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font);
-  background: linear-gradient(165deg, var(--pink-50) 0%, #fff0fc 35%, #fce7f6 70%, var(--lilac) 120%);
+  background-color: var(--pink-50);
   color: var(--text);
   line-height: 1.55;
   padding: 1rem 1rem 5.5rem;
@@ -33,11 +33,48 @@ body {
   overflow-x: hidden;
 }
 
-.bg-blobs {
+.rainbow-bg {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
+  background:
+    radial-gradient(ellipse 120% 70% at 50% -15%,
+      rgba(255, 59, 48, 0.2) 0%,
+      rgba(255, 149, 0, 0.16) 18%,
+      rgba(255, 214, 10, 0.14) 34%,
+      rgba(52, 199, 89, 0.12) 50%,
+      rgba(10, 132, 255, 0.14) 66%,
+      rgba(94, 92, 230, 0.15) 82%,
+      rgba(191, 90, 242, 0.14) 94%,
+      transparent 100%
+    ),
+    linear-gradient(
+      105deg,
+      rgba(255, 100, 130, 0.12) 0%,
+      rgba(255, 200, 100, 0.1) 20%,
+      rgba(255, 255, 120, 0.09) 40%,
+      rgba(130, 230, 160, 0.09) 60%,
+      rgba(120, 200, 255, 0.11) 80%,
+      rgba(200, 140, 255, 0.12) 100%
+    );
+  animation: rainbow-drift 22s ease-in-out infinite alternate;
+}
+
+@keyframes rainbow-drift {
+  0% { opacity: 0.75; filter: saturate(1) hue-rotate(0deg); }
+  100% { opacity: 0.95; filter: saturate(1.15) hue-rotate(12deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rainbow-bg { animation: none; opacity: 0.85; }
+}
+
+.bg-blobs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .blob {
@@ -80,7 +117,7 @@ body {
 
 .hero {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   text-align: center;
   padding: 2rem 1rem 2.25rem;
   margin-bottom: 1.25rem;
@@ -169,7 +206,7 @@ body {
 
 .fun-strip {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
@@ -208,7 +245,7 @@ body {
 
 .gifts-grid {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
   gap: 1.15rem;
@@ -227,6 +264,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  text-align: center;
+  align-items: center;
 }
 
 .gift-card:hover {
@@ -236,6 +275,7 @@ body {
 
 .gift-image {
   width: 100%;
+  max-width: 260px;
   height: 188px;
   object-fit: cover;
   border-radius: 16px;
@@ -270,7 +310,18 @@ body {
   font-weight: 600;
   display: inline-block;
   width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
   border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.gift-card .group-info {
+  width: 100%;
+  text-align: center;
+}
+
+.gift-card .group-info small {
+  display: block;
 }
 
 .progress-bar {
@@ -278,8 +329,10 @@ body {
   background: var(--pink-100);
   border-radius: 999px;
   overflow: hidden;
-  margin: 0.5rem 0;
+  margin: 0.5rem auto;
   border: 1px solid var(--pink-200);
+  width: 100%;
+  max-width: 260px;
 }
 
 .progress-fill {
@@ -295,6 +348,19 @@ body {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: auto;
+  justify-content: center;
+  width: 100%;
+}
+
+.gift-actions .btn {
+  min-width: min(100%, 11rem);
+}
+
+.gift-card .status-badge {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .btn {
@@ -415,7 +481,7 @@ body {
 
 #admin-panel {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: 620px;
   margin: 2rem auto;
   background: var(--card);
@@ -473,7 +539,7 @@ body {
 
 .site-footer {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   text-align: center;
   margin-top: 2.5rem;
   padding: 1.5rem 1rem;
