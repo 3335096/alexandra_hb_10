@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎁 Wish List Александры (10 лет!)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🎀 Wish List Александры</h1>
+    <p>День рождения: <strong>10 лет!</strong> 🎈</p>
+    <p class="subtitle">Выберите подарок и отметьте, что планируете подарить 💝</p>
+  </header>
+
+  <main id="gifts-container" class="gifts-grid">
+    <p class="loading">Загрузка списка подарков...</p>
+  </main>
+
+  <dialog id="reserve-modal">
+    <h3>🔒 Забронировать подарок</h3>
+    <p id="modal-gift-title"></p>
+    <form id="reserve-form">
+      <label>Ваше имя: <input type="text" id="reserve-name" required minlength="2" placeholder="Например: Анна" /></label>
+      <div class="modal-actions">
+        <button type="submit">Забронировать</button>
+        <button type="button" id="close-reserve">Отмена</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="group-modal">
+    <h3>👥 Присоединиться к складчине</h3>
+    <p id="group-gift-title"></p>
+    <p class="progress-info">Собрано: <strong id="collected">0</strong> / <strong id="target">0</strong> ₽</p>
+    <progress id="group-progress" max="100" value="0"></progress>
+    <form id="group-form">
+      <label>Ваше имя: <input type="text" id="group-name" required minlength="2" /></label>
+      <label>Сумма (₽): <input type="number" id="group-amount" min="100" step="100" required /></label>
+      <div class="modal-actions">
+        <button type="submit">Внести вклад</button>
+        <button type="button" id="close-group">Отмена</button>
+      </div>
+    </form>
+  </dialog>
+
+  <section id="admin-panel" hidden>
+    <h2>⚙️ Админ-панель</h2>
+    <form id="add-gift-form">
+      <input type="password" id="admin-key" placeholder="Ключ администратора" required />
+      <input type="text" id="gift-title" placeholder="Название подарка" required />
+      <textarea id="gift-desc" placeholder="Описание"></textarea>
+      <input type="url" id="gift-link" placeholder="Ссылка на товар" required />
+      <input type="url" id="gift-image" placeholder="URL картинки (необязательно)" />
+      <input type="number" id="gift-price" placeholder="Цена (₽)" step="0.01" />
+      <label><input type="checkbox" id="gift-group" /> Это подарок в складчину</label>
+      <input type="number" id="gift-target" placeholder="Целевая сумма для складчины" step="0.01" />
+      <button type="submit">➕ Добавить подарок</button>
+    </form>
+  </section>
+
+  <button id="toggle-admin" class="admin-toggle">🔐 Админ</button>
+
+  <footer>
+    <p>Сделано с 💜 для Александры | <a href="#" id="show-admin-link">Для родителей</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
