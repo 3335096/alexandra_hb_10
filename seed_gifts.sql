@@ -1,10 +1,15 @@
--- Однократная заливка подарков (ozon.by). Повторный запуск безопасен: те же ссылки не дублируются.
--- Выполнение: psql "$DATABASE_URL" -f seed_gifts.sql
--- (локально или: Railway → Postgres → Query / или CLI с переменной DATABASE_URL сервиса приложения)
+-- Подарки ozon.by. Повторный запуск безопасен: INSERT не дублирует по link.
+-- Сначала правим уже сохранённые опечатки в slug, затем добавляем недостающие строки.
+
+UPDATE gifts SET link = 'https://ozon.by/t/4kIs8RZ' WHERE link = 'https://ozon.by/t/4kls8RZ';
+UPDATE gifts SET link = 'https://ozon.by/t/NBDlzyW' WHERE link = 'https://ozon.by/t/NBDIzyW';
+UPDATE gifts SET link = 'https://ozon.by/t/nPIHvAe' WHERE link = 'https://ozon.by/t/nPlHvAe';
+UPDATE gifts SET link = 'https://ozon.by/t/NBDlJMA' WHERE link = 'https://ozon.by/t/NBDIJMA';
+UPDATE gifts SET link = 'https://ozon.by/t/uevTvzI' WHERE link = 'https://ozon.by/t/uevTvzl';
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
-SELECT $$Хипперсы на телефон котики$$, NULL, 'https://ozon.by/t/4kls8RZ', NULL, NULL, false, NULL
-WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/4kls8RZ');
+SELECT $$Хипперсы на телефон котики$$, NULL, 'https://ozon.by/t/4kIs8RZ', NULL, NULL, false, NULL
+WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/4kIs8RZ');
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
 SELECT $$Мини-принтер цветной Xiaomi Mijia Printer AR ZINK$$, NULL, 'https://ozon.by/t/c0yaY2s', NULL, NULL, false, NULL
@@ -15,12 +20,12 @@ SELECT $$Фигурка Лило и Стич / Lilo and Stitch Summer Stitch (10
 WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/NBqznYN');
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
-SELECT $$Спортивная бутылка, 720 мл$$, NULL, 'https://ozon.by/t/NBDIzyW', NULL, NULL, false, NULL
-WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/NBDIzyW');
+SELECT $$Спортивная бутылка, 720 мл$$, NULL, 'https://ozon.by/t/NBDlzyW', NULL, NULL, false, NULL
+WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/NBDlzyW');
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
-SELECT $$Nike Рюкзак$$, NULL, 'https://ozon.by/t/nPlHvAe', NULL, NULL, false, NULL
-WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/nPlHvAe');
+SELECT $$Nike Рюкзак$$, NULL, 'https://ozon.by/t/nPIHvAe', NULL, NULL, false, NULL
+WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/nPIHvAe');
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
 SELECT $$Фигурка Funko POP! Nooks Disney Winnie the Pooh$$, NULL, 'https://ozon.by/t/sS418Sk', NULL, NULL, false, NULL
@@ -39,13 +44,13 @@ SELECT $$Neflibata Сумка багет, на плечо$$, NULL, 'https://ozon
 WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/zM1ZiFZ');
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
-SELECT $$Акриловые маркеры для рисования двухцветные кисти 48 шт 96 цветов$$, NULL, 'https://ozon.by/t/NBDIJMA', NULL, NULL, false, NULL
-WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/NBDIJMA');
+SELECT $$Акриловые маркеры для рисования двухцветные кисти 48 шт 96 цветов$$, NULL, 'https://ozon.by/t/NBDlJMA', NULL, NULL, false, NULL
+WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/NBDlJMA');
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
 SELECT $$Набор гуашевых красок HIMI MIYA персиковый 48 цветов по 12 грамм$$, NULL, 'https://ozon.by/t/b2rc3W2', NULL, NULL, false, NULL
 WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/b2rc3W2');
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
-SELECT $$Набор для творчества и создания брелков и заколок$$, NULL, 'https://ozon.by/t/uevTvzl', NULL, NULL, false, NULL
-WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/uevTvzl');
+SELECT $$Набор для творчества и создания брелков и заколок$$, NULL, 'https://ozon.by/t/uevTvzI', NULL, NULL, false, NULL
+WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/uevTvzI');
