@@ -6,6 +6,7 @@ UPDATE gifts SET link = 'https://ozon.by/t/NBDlzyW' WHERE link = 'https://ozon.b
 UPDATE gifts SET link = 'https://ozon.by/t/nPIHvAe' WHERE link = 'https://ozon.by/t/nPlHvAe';
 UPDATE gifts SET link = 'https://ozon.by/t/NBDlJMA' WHERE link = 'https://ozon.by/t/NBDIJMA';
 UPDATE gifts SET link = 'https://ozon.by/t/uevTvzI' WHERE link = 'https://ozon.by/t/uevTvzl';
+UPDATE gifts SET link = 'https://ozon.by/product/figurka-funko-pop-disney-winnie-the-pooh-s3-winnie-the-pooh-1512-80236-3255638358/?at=99tr6mMYvunnPgyqU1LRLYWc1Zw9wlHMEvO97U7JRZkz' WHERE link = 'https://ozon.by/t/sS418Sk';
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
 SELECT $$Хипперсы на телефон котики$$, NULL, 'https://ozon.by/t/4kIs8RZ', NULL, NULL, false, NULL
@@ -28,8 +29,8 @@ SELECT $$Nike Рюкзак$$, NULL, 'https://ozon.by/t/nPIHvAe', NULL, NULL, fal
 WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/nPIHvAe');
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
-SELECT $$Фигурка Funko POP! Nooks Disney Winnie the Pooh$$, NULL, 'https://ozon.by/t/sS418Sk', NULL, NULL, false, NULL
-WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/t/sS418Sk');
+SELECT $$Фигурка Funko POP! Nooks Disney Winnie the Pooh$$, NULL, 'https://ozon.by/product/figurka-funko-pop-disney-winnie-the-pooh-s3-winnie-the-pooh-1512-80236-3255638358/?at=99tr6mMYvunnPgyqU1LRLYWc1Zw9wlHMEvO97U7JRZkz', NULL, NULL, false, NULL
+WHERE NOT EXISTS (SELECT 1 FROM gifts WHERE link = 'https://ozon.by/product/figurka-funko-pop-disney-winnie-the-pooh-s3-winnie-the-pooh-1512-80236-3255638358/?at=99tr6mMYvunnPgyqU1LRLYWc1Zw9wlHMEvO97U7JRZkz');
 
 INSERT INTO gifts (title, description, link, image_url, price, is_group_gift, target_amount)
 SELECT $$Фигурка Funko POP! Animation KPop Demon Hunters Derpy with Sussie$$, NULL, 'https://ozon.by/t/Va6vMj8', NULL, NULL, false, NULL
