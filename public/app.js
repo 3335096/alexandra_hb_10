@@ -57,6 +57,12 @@ function renderGiftCard(gift, showAdminDetail) {
     <div class="gift-admin" data-gift-id="${gift.id}">
       <p class="gift-admin-heading">Только для администратора</p>
       ${gift.status === 'reserved' ? `<p class="admin-lead"><strong>Кто забронировал:</strong> ${gift.reserved_by_name ? escapeHtml(gift.reserved_by_name) : '—'}</p>` : ''}
+      <label class="admin-field admin-checkbox-row">
+        <span class="admin-checkbox-inner">
+          <input type="checkbox" data-field="group" ${gift.is_group_gift ? 'checked' : ''} />
+          Подарок в складчину
+        </span>
+      </label>
       ${
         isGroup
           ? `<div class="admin-contrib-wrap">
@@ -141,10 +147,12 @@ async function saveGiftAdmin(id) {
   if (!card) return;
 
   const body = { admin_key: getAdminKey() };
+  const grp = card.querySelector('[data-field="group"]');
   const p = card.querySelector('[data-field="price"]');
   const t = card.querySelector('[data-field="target"]');
   const n = card.querySelector('[data-field="note"]');
 
+  if (grp) body.is_group_gift = grp.checked;
   if (p) body.price = p.value === '' ? null : Number(p.value);
   if (t) body.target_amount = t.value === '' ? null : Number(t.value);
   if (n) body.admin_note = n.value.trim() === '' ? null : n.value;

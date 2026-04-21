@@ -161,7 +161,7 @@ app.put('/api/gifts/:id/contribute', async (req, res) => {
 
 // ✏️ Изменить подарок (админ): цена, цель складчины, заметка
 app.patch('/api/gifts/:id', async (req, res) => {
-  const { admin_key, price, target_amount, admin_note } = req.body;
+  const { admin_key, price, target_amount, admin_note, is_group_gift } = req.body;
   if (admin_key !== process.env.ADMIN_KEY) {
     return res.status(403).json({ error: 'Неверный ключ администратора' });
   }
@@ -169,12 +169,23 @@ app.patch('/api/gifts/:id', async (req, res) => {
   const fields = [];
   const values = [];
   let n = 1;
+  let skipTargetFromBody = false;
+
+  if (is_group_gift !== undefined) {
+    fields.push(`is_group_gift = $${n++}`);
+    values.push(Boolean(is_group_gift));
+    if (!is_group_gift) {
+      fields.push(`target_amount = $${n++}`);
+      values.push(null);
+      skipTargetFromBody = true;
+    }
+  }
 
   if (price !== undefined) {
     fields.push(`price = $${n++}`);
     values.push(price === '' || price === null ? null : Number(price));
   }
-  if (target_amount !== undefined) {
+  if (target_amount !== undefined && !skipTargetFromBody) {
     fields.push(`target_amount = $${n++}`);
     values.push(target_amount === '' || target_amount === null ? null : Number(target_amount));
   }
@@ -184,7 +195,9 @@ app.patch('/api/gifts/:id', async (req, res) => {
   }
 
   if (fields.length === 0) {
-    return res.status(400).json({ error: 'Укажите цену, цель складчины или заметку' });
+    return res.status(400).json({
+      error: 'Укажите цену, цель, заметку, тип подарка (складчина) или другие поля',
+    });
   }
 
   values.push(req.params.id);
