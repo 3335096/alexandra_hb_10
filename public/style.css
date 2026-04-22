@@ -401,6 +401,17 @@ body {
   border-color: var(--pink-300);
 }
 
+.btn-danger {
+  background: linear-gradient(135deg, #fb7185, #e11d48);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+}
+
+.btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
+}
+
 .btn-ghost {
   background: transparent;
   color: var(--text-soft);
@@ -679,6 +690,11 @@ body {
 .btn-admin-save {
   width: 100%;
   margin-top: 0.35rem;
+}
+
+.btn-admin-delete {
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 .admin-checkbox-row {

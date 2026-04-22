@@ -88,6 +88,7 @@ function renderGiftCard(gift, showAdminDetail) {
         <textarea data-field="note" rows="2" placeholder="Напоминание себе…">${gift.admin_note ? escapeHtml(gift.admin_note) : ''}</textarea>
       </label>
       <button type="button" class="btn btn-primary btn-admin-save" data-save-id="${gift.id}">Сохранить изменения</button>
+      <button type="button" class="btn btn-danger btn-admin-delete" data-delete-id="${gift.id}">Удалить подарок</button>
     </div>
   `
     : '';
@@ -180,6 +181,30 @@ async function saveGiftAdmin(id) {
   }
 }
 
+async function deleteGiftAdmin(id) {
+  const gift = giftsById[id];
+  const title = gift?.title ? `«${gift.title}»` : `#${id}`;
+  const ok = confirm(`Удалить подарок ${title}? Это действие нельзя отменить.`);
+  if (!ok) return;
+
+  try {
+    const res = await fetch(`${API}/gifts/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ admin_key: getAdminKey() }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok) {
+      alert('✅ Удалено');
+      loadGifts();
+    } else {
+      alert('⚠️ ' + (data.error || 'Ошибка удаления'));
+    }
+  } catch {
+    alert('⚠️ Не удалось удалить');
+  }
+}
+
 function openReserveModal(id) {
   currentGiftId = id;
   const g = giftsById[id];
@@ -203,6 +228,11 @@ document.getElementById('gifts-container').addEventListener('click', (e) => {
   const saveBtn = e.target.closest('.btn-admin-save');
   if (saveBtn) {
     saveGiftAdmin(Number(saveBtn.dataset.saveId));
+    return;
+  }
+  const delBtn = e.target.closest('.btn-admin-delete');
+  if (delBtn) {
+    deleteGiftAdmin(Number(delBtn.dataset.deleteId));
     return;
   }
   const r = e.target.closest('.btn-open-reserve');
